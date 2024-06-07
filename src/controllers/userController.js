@@ -2,7 +2,7 @@ const {
     createUser, 
     updateUser, 
     getAllUser, 
-    getUserById, 
+    getUserByEmail, 
     sremoveUser} = require("../services/userService");
 
 
@@ -28,10 +28,10 @@ class userController{
         }
     }
 
-    async getUserById(req, res){
-        let id = req.params.id;
+    async getUserByEmail(req, res){
+        let email = req.params.email;
         try {
-            const user = await getUserById(id);
+            const user = await getUserByEmail(email);
             res.status(200).json(user);
         } catch (error) {
             res.status(500).json({message:error.message});

@@ -10,8 +10,8 @@ class UserRepository{
         return await userModel.find();
     }
 
-    async getUserById(id){
-        return await userModel.findById(id);
+    async getUserByEmail(email){
+        return await userModel.findOne({email})
     }
 
     async updateUser(id, updateUser){

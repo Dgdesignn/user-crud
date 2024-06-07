@@ -2,7 +2,7 @@ const express = require('express');
 const {
     createUser,
     getAllUsers,
-    getUserById,
+    getUserByEmail,
     updateUser,
     removeUser
 } = require('../controllers/userController');
@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/user', createUser)
       .get('/user',getAllUsers);
 
-router.get('/user/:id',getUserById)
+router.get('/user/:email',getUserByEmail)
       .put('/user/:id', updateUser)
       .delete('/user/:id',removeUser);
 
