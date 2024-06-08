@@ -3,16 +3,18 @@ const {
     updateUser, 
     getAllUser, 
     getUserByEmail, 
-    sremoveUser} = require("../services/userService");
+    sremoveUser,
+    login
+} = require("../services/userService");
 
 
 class userController{
     
     async createUser(req, res){
-        let {username, password} = req.body;
+        let {username, password,email} = req.body;
 
         try {
-            const user = await createUser({username:username, password:password})
+            const user = await createUser({username:username,password:password,email:email})
             res.status(201).json({message:"Usuário criado com sucess!",user:user})
         } catch (error) {
             res.status(500).json({message:error.message})
@@ -56,6 +58,17 @@ class userController{
              res.status(204).json({message:'Usuário removido'}) 
         } catch (error) {
             res.status(500).json({message:error.message});
+        }
+    }
+
+
+    async login(req, res){
+        const {password, email} = req.body;
+        try {
+            const userToken = await login(email, password);
+            res.status(201).json(userToken);
+        } catch (error) {
+            res.status(401).json({title:"login not acepted",message:error.message});
         }
     }
 
