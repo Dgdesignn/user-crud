@@ -4,7 +4,8 @@ const {
     getAllUser, 
     getUserByEmail, 
     sremoveUser,
-    login
+    login,
+    sremoveAllUser
 } = require("../services/userService");
 
 
@@ -22,6 +23,7 @@ class userController{
     }
 
     async getAllUsers(req, res){
+        console.log(req.headers)
         try {
             const users = await getAllUser();
             res.status(200).json(users);
@@ -53,6 +55,7 @@ class userController{
 
     async removeUser(req, res){
         const id = req.params.id;
+        
         try {
              const userR = await sremoveUser(id);
              res.status(204).json({message:'Usuário removido'}) 
@@ -66,7 +69,8 @@ class userController{
         const {password, email} = req.body;
         try {
             const userToken = await login(email, password);
-            res.status(201).json(userToken);
+            res.cookie('token',userToken,{httpOnly:true,secure:process.env.NODE_ENV === 'production'})
+            res.status(201).json({message:"login successful",token:userToken});
         } catch (error) {
             res.status(401).json({title:"login not acepted",message:error.message});
         }

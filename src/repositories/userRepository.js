@@ -19,7 +19,11 @@ class UserRepository{
     }
 
     async deleteUser(id){
-        return await userModel.findByIdAndDelete(id);
+        return await userModel.findOneAndDelete({id});
+    }
+
+    async deleteAllUser(){
+        return await userModel.deleteMany({}) 
     }
 }
 

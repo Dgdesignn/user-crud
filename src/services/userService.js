@@ -19,11 +19,17 @@ class UserService{
     }
 
     async updateUser(id, user){
+        const salt = await bcrypt.genSalt(10);
+        user.password =  await bcrypt.hash(user.password, salt);
         return await userRepository.updateUser(id, user);
     }
 
     async sremoveUser(id){
-        return await userRepository.deleteUser(id)
+        if(id==0){
+            return await userRepository.deleteAllUser();
+        }else{
+            return await userRepository.deleteUser(id);
+        }
     }
 
     async login(email,password){
@@ -32,7 +38,7 @@ class UserService{
         if(!user)throw new Error('Usuário não encontrado');
         
         const userPassword = user.password;
-        const isMatch = await bcrypt.compare(password,userPassword);
+        const isMatch = await bcrypt.compare(password, userPassword);
 
         console.log(isMatch);
         if(!isMatch){
