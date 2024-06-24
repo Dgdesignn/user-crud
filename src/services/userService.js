@@ -5,8 +5,10 @@ const jwt = require('jsonwebtoken');
 class UserService{
 
     async createUser(user){
+
+        
         const salt = await bcrypt.genSalt(10);
-        user.password =  await bcrypt.hash(user.password, salt);
+        user.password = await bcrypt.hash(user.password, salt);
         return await userRepository.createUser(user);
     }
 
@@ -40,13 +42,12 @@ class UserService{
         const userPassword = user.password;
         const isMatch = await bcrypt.compare(password, userPassword);
 
-        console.log(isMatch);
-        if(!isMatch){
+        if(!isMatch){ 
             throw new Error('Email ou Senha inválida');
         }
 
        const payload = {userId: user.id, username:user.username, email:user.email};
-       const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn:'2m'});
+       const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn:'5m'});
         return { token };
     }
 }

@@ -14,6 +14,11 @@ class userController{
     async createUser(req, res){
         let {username, password,email} = req.body;
 
+        const ifEmailValible = getUserByEmail(emal)
+        if(ifEmailValible){
+            res.status(403).json({mensagem:"Usuário existente"})
+            return
+        }
         try {
             const user = await createUser({username:username,password:password,email:email})
             res.status(201).json({message:"Usuário criado com sucess!",user:user})
