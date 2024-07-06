@@ -47,7 +47,7 @@ class UserService{
         }
 
        const payload = {userId: user.id, username:user.username, email:user.email};
-       const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn:'5m'});
+       const token = jwt.sign({user:payload}, process.env.JWT_SECRET, {expiresIn:'5m'});
         return { token };
     }
 }

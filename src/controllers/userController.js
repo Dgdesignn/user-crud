@@ -31,6 +31,7 @@ class userController{
         console.log(req.headers)
         try {
             const users = await getAllUser();
+            console.log(req.userID)
             res.status(200).json(users);
         } catch (error) {
             res.status(500).json({message:error.message});
