@@ -4,9 +4,9 @@ const User = require('../repositories/userRepository');
 
 class AuthService{
     async register(userData){
-        const {username, email, password, role} = userData;
+        const {username, password, email, role} = userData;
         const hashedPassword = await bcrypt.hash(password, 10);
-        return await User.createUser({username, email, hashedPassword, role})
+        return await User.createUser({username:username, password:hashedPassword, email:email, role:role})
     }
 
     async login(loginData){
