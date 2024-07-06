@@ -12,9 +12,10 @@ const {
 class userController{
     
     async createUser(req, res){
-        let {username, password,email} = req.body;
+        let {username, password, email} = req.body;
 
-        const ifEmailValible = getUserByEmail(emal)
+        const ifEmailValible = await getUserByEmail(email)
+        console.log(ifEmailValible)
         if(ifEmailValible){
             res.status(403).json({mensagem:"Usuário existente"})
             return
@@ -63,8 +64,8 @@ class userController{
         const id = req.params.id;
         
         try {
-             const userR = await sremoveUser(id);
-             res.status(204).json({message:'Usuário removido'}) 
+             const result = await sremoveUser(id);
+             res.status(204).json({message:'Usuário removido',result:result}) 
         } catch (error) {
             res.status(500).json({message:error.message});
         }
