@@ -26,7 +26,7 @@ class AuthController{
         
         try {
             const userToken = await login({email, password});
-           // res.cookie('token',userToken,{httpOnly:true,secure:process.env.NODE_ENV === 'production'})
+           //res.cookie('token',userToken,{httpOnly:true,secure:process.env.NODE_ENV === 'production'})
             res.status(201).json({message:"login efetuado com sucesso",token:userToken});
         } catch (error) {
             res.status(401).json({title:"login inválido",message:error.message});
