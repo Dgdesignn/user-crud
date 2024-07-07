@@ -23,7 +23,6 @@ class AuthController{
     async login(req, res){
         const {password, email} = req.body;
         
-        
         try {
             const userToken = await login({email, password});
            //res.cookie('token',userToken,{httpOnly:true,secure:process.env.NODE_ENV === 'production'})
