@@ -12,7 +12,7 @@ class AuthService{
     async login(loginData){
         const {password, email} =loginData;
         const user = await User.getUserByEmail(email);
-        
+
         if(!user)return"Email ou senha inválido";
 
         const isMatch = await bcrypt.compare(password, user.password);
@@ -20,8 +20,8 @@ class AuthService{
 
         const playload = {userId:user._id, role:user.role};
         const token = jwt.sign(playload, process.env.JWT_SECRET, {expiresIn:'2m'});
-        console.log("Token::=> ".token)
-        return {token};
+   
+        return token
     }
 }
 
