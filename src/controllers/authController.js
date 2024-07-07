@@ -6,7 +6,7 @@ class AuthController{
 
     async register(req, res){
 
-        const ifEmailValible = await getUserByEmail(email)
+        const ifEmailValible = await getUserByEmail(req.body.email)
         if(ifEmailValible){
             res.status(403).json({mensagem:"Usuário ou email inválido"})
             return
@@ -20,15 +20,17 @@ class AuthController{
         }
     }
 
-    
+
     async login(req, res){
         const {password, email} = req.body;
+        console.log(email)
+        const userToken = await login({email, password});
+
         try {
-            const userToken = await login(email, password);
             res.cookie('token',userToken,{httpOnly:true,secure:process.env.NODE_ENV === 'production'})
-            res.status(201).json({message:"login successful",token:userToken});
+            res.status(201).json({message:"login efetuado com sucesso",token:userToken});
         } catch (error) {
-            res.status(401).json({title:"login not acepted",message:error.message});
+            res.status(401).json({title:"login inválido",message:error.message});
         }
     }
 }

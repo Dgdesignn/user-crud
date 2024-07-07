@@ -10,15 +10,17 @@ class AuthService{
     }
 
     async login(loginData){
-        const user = await User.getUserByEmail({email});
-        if(!user)return null;
+        const {password, email} =loginData;
+        const user = await User.getUserByEmail(email);
+        
+        if(!user)return"Email ou senha inválido";
 
-        const isMatch = await bcrypt.compare(loginData.password, user.password);
-        if(!isMatch)return null;
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(!isMatch)return"Email ou senha inválido";
 
         const playload = {userId:user._id, role:user.role};
         const token = jwt.sign(playload, process.env.JWT_SECRET, {expiresIn:'2m'});
-
+        console.log("Token::=> ".token)
         return {token};
     }
 }
