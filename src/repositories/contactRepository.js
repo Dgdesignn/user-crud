@@ -9,23 +9,23 @@ class ContactRepository {
     }
 
     async getAllContactUser(userID){
-        return await new contactModel.find({uer: userID});
+        return await new contactModel.find({uer: userID});//Traz todos os contactos de um usuário
     }
 
     async getAllContact(){
-        return await new contactModel.find();
+        return await new contactModel.find();//Traz todos sos contactos do banco de dados
     }
 
-    async getContactByID(userID, contactID){
-        return await new contactModel.findOne({_id:contactID, user:userID});
+    async getContactByID(data){
+        return await new contactModel.findOne({phone:data.phone, user:data.userID});//Traz um contacto específico de um usuário
     }
 
-    async updateContact(userID, contactID, Data){
-        return await new contactModel.findOneAndUpdate({_id:contactID, user:userID},Data,{new:true});
+    async updateContact(contactIDs, Data){
+        return await new contactModel.findOneAndUpdate(contactIDs ,Data,{new:true});
     }
 
-    async deleteContact(userID, contactID){
-        return await new contactModel.findByIdAndDelete({_id:contactID, user:userID});
+    async deleteContact(Data){
+        return await new contactModel.findByIdAndDelete({_id:Data.contactID, user:Data.userID});
     }
 
     async deleteAllUserContactByID(userID){
