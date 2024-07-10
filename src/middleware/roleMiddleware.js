@@ -1,8 +1,8 @@
 
 
 const roleMiddleware = (roles)=>(req, res, next)=>{
-    if(!role.includes(req.user.role)){
-        return res.status(403).json({message:'Access denied'})
+    if(!roles.includes(req.userRole)){
+        return res.status(403).json({message:'Acesso negado!'})
     }
     next();
 }

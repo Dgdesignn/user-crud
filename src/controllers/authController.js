@@ -15,7 +15,7 @@ class AuthController{
             const user = await register(req.body);
             res.status(201).json({message:"Usuário criado com sucess!",user:user})
         } catch (error) {
-            res.status(500).json({message:error.message})
+            res.status(500).json({"titulo":"Usuário não criado",message:error.message})
         }
     }
 

@@ -4,18 +4,21 @@ const {
     getUserByEmail,
     updateUser,
     removeUser,
+    removeAllUser
 } = require('../controllers/userController');
 const authMiddleware = require('../middleware/authMiddleware');
+const roleMiddleware = require('../middleware/roleMiddleware');
 
 
 const router = express.Router();
 
 
 
-router.get('/user',authMiddleware,getAllUsers);
-router.get('/user/:email',authMiddleware,getUserByEmail)
-      .put('/user/:id', authMiddleware,updateUser)
-      .delete('/user/:id',authMiddleware, removeUser);
+router.get('/authors',authMiddleware, roleMiddleware(['admin']),getAllUsers);
+router.get('/authors/:email',authMiddleware, roleMiddleware(['admin']), getUserByEmail)
+      .put('/auhtors/:id', authMiddleware,updateUser)
+      .delete('/authors/:id',authMiddleware, removeUser)//Remove apenas um usuário
+      .delete('/dunp-authors/:',authMiddleware, roleMiddleware(['admin']),removeAllUser);//Remove tods usários
 
 
 module.exports = router;

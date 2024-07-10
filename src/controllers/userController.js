@@ -1,20 +1,19 @@
 const {
-    createUser, 
-    updateUser, 
-    getAllUser, 
-    getUserByEmail, 
-    sremoveUser,
-    login,
-    sremoveAllUser
+    getAllUsers,
+    getUserByEmail,
+    getUserContact,
+    updateUser,
+    removeUserById,
+    removeAllUsers
+
 } = require("../services/userService");
 
 
 class userController{
 
     async getAllUsers(req, res){
-        console.log(req.headers)
         try {
-            const users = await getAllUser();
+            const users = await getAllUsers();
             console.log(req.userID)
             res.status(200).json(users);
         } catch (error) {
@@ -42,13 +41,23 @@ class userController{
         }
     }
 
-
     async removeUser(req, res){
         const id = req.params.id;
         
         try {
-             const result = await sremoveUser(id);
+             const result = await removeUserById(id);
              res.status(204).json({message:'Usuário removido',result:result}) 
+        } catch (error) {
+            res.status(500).json({message:error.message});
+        }
+    }
+
+    async removeAllUser(req, res){
+        const id = req.params.id;
+        
+        try {
+             const result = await removeAllUsers();
+             res.status(204).json({message:'Todos os usuários foram removidos',result:result}) 
         } catch (error) {
             res.status(500).json({message:error.message});
         }

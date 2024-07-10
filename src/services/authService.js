@@ -15,7 +15,7 @@ class AuthService{
 
         if(!user){
             throw new Error("Email ou Senha inválida!");
-        }
+        } 
 
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
